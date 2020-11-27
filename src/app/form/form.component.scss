@@ -1,0 +1,14 @@
+form .ng-invalid {
+  border-bottom: 3px solid red !important;
+}
+
+form .ng-valid {
+  border-bottom: 3px solid green !important;
+}
+
+.loading {
+  height: 30px;
+  position: absolute;
+  right: 0;
+  transform: translateX(-75%) translateY(calc(-100% - 4px));
+}
