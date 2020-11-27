@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../user.class';
-import {asyncUrlValidator, emailValidator, rangeValidator} from '../custom-validators';
+import {asyncUrlValidator, emailValidator, observableUrlValidator, rangeValidator} from '../custom-validators';
 import {FORM_ERRORS, FORM_SUCCESS, PLACEHOLDERS, ROLES, VALIDATION_MESSAGES} from '../form-data';
 
 @Component({
@@ -44,7 +44,7 @@ export class FormComponent implements OnInit {
       email: [this.user.email, [Validators.required, emailValidator]],
       role: [this.user.role, [Validators.required]],
       age: [this.user.age, [Validators.required, rangeValidator(1, 122)]],
-      site: [this.user.site, [Validators.required], [asyncUrlValidator]],
+      site: [this.user.site, [Validators.required], [observableUrlValidator]],
     });
 
     this.userForm.valueChanges.subscribe(() => this.onValueChanged());

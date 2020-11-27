@@ -1,4 +1,6 @@
 import {AbstractControl, ValidationErrors} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 
 export function asyncUrlValidator(control: AbstractControl): Promise<ValidationErrors | boolean | null> {
@@ -15,6 +17,21 @@ export function asyncUrlValidator(control: AbstractControl): Promise<ValidationE
     }
     }, 10000);
   });
+}
+
+export function observableUrlValidator(control: AbstractControl): Observable<ValidationErrors | boolean | null> {
+  const urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+  const value = control.value;
+  const result = urlRegex.test(value);
+
+  return new Observable<ValidationErrors | boolean | null>(observer => {
+      if (!result) {
+        observer.next({urlNotAllowed: {value}});
+      } else {
+        observer.next(null);
+      }
+    observer.complete();
+  }).pipe(delay(5000));
 }
 
 export  function emailValidator(control: AbstractControl): { [key: string]: any } {
